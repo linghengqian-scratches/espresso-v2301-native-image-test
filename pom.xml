@@ -48,7 +48,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.2</version>
+                <version>3.0.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -81,6 +81,49 @@
     </build>
 
     <profiles>
+        <profile>
+            <id>generateStandardMetadata</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.graalvm.buildtools</groupId>
+                        <artifactId>native-maven-plugin</artifactId>
+                        <version>0.9.23</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <agent>
+                                <enabled>true</enabled>
+                                <defaultMode>Direct</defaultMode>
+                                <modes>
+                                    <direct>config-output-dir=${project.basedir}/src/main/resources/META-INF/native-image/${project.groupId}/${project.artifactId}</direct>
+                                </modes>
+                                <options>
+                                    <callerFilterFiles>
+                                        <filterFile>${user.dir}/caller-filter.json</filterFile>
+                                    </callerFilterFiles>
+                                </options>
+                            </agent>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>test-native</id>
+                                <goals>
+                                    <goal>test</goal>
+                                </goals>
+                                <phase>test</phase>
+                            </execution>
+                            <execution>
+                                <id>build-native</id>
+                                <goals>
+                                    <goal>compile-no-fork</goal>
+                                </goals>
+                                <phase>package</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>native</id>
             <build>
