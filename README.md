@@ -12,6 +12,6 @@ gu install espresso
 
 git clone git@github.com:linghengqian/espresso-v2301-native-image-test.git
 cd ./espresso-v2301-native-image-test/
-./mvnw clean test
+./mvnw -PgenerateMetadata clean test native:metadata-copy
 ./mvnw -Pnative clean test
 ```

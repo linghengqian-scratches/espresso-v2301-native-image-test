@@ -18,9 +18,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-/**
- * Espresso inline expression parser.
- */
 public final class EspressoInlineExpressionParser {
     
     private static final String JAVA_CLASSPATH;
