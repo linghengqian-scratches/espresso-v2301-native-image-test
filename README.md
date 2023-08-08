@@ -7,7 +7,7 @@
 sudo apt install unzip zip curl sed -y
 curl -s "https://get.sdkman.io" | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
-sdk install java 17.0.7-graalce
+sdk install java 17.0.8-graalce
 sudo apt-get install build-essential libz-dev zlib1g-dev -y
 gu install espresso
 
@@ -22,7 +22,7 @@ cd ./espresso-v2301-native-image-test/
 <summary>Error Log</summary>
 
 ```shell
-$ ./mvnw -PgenerateMetadata clean test native:metadata-copy
+linghengqian@DESKTOP-PNK8EKR:~/TwinklingLiftWorks/git/public/espresso-v2301-native-image-test$ ./mvnw -PgenerateMetadata clean test native:metadata-copy
 [INFO] Scanning for projects...
 [INFO] Found GraalVM installation from JAVA_HOME variable.
 [INFO] 
@@ -60,11 +60,11 @@ $ ./mvnw -PgenerateMetadata clean test native:metadata-copy
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
 [INFO] Running com.lingh.EspressoInlineExpressionParserTest
-[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 206.099 s - in com.lingh.EspressoInlineExpressionParserTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.215 s - in com.lingh.EspressoInlineExpressionParserTest
 [INFO] 
 [INFO] Results:
 [INFO] 
-[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] 
 [INFO] 
 [INFO] --- native-maven-plugin:0.9.23:merge-agent-files (test-native) @ espresso-v2301-native-image-test ---
@@ -83,8 +83,8 @@ Error: Use -H:+ReportExceptionStackTraces to print stacktrace of underlying exce
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  03:37 min
-[INFO] Finished at: 2023-07-27T17:10:50+08:00
+[INFO] Total time:  8.138 s
+[INFO] Finished at: 2023-08-09T00:59:16+08:00
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.graalvm.buildtools:native-maven-plugin:0.9.23:test (test-native) on project espresso-v2301-native-image-test: Execution of /home/linghengqian/.sdkman/candidates/java/current/bin/native-image -cp /home/linghengqian/TwinklingLiftWorks/git/public/espresso-v2301-native-image-test/target/classes:/home/linghengqian/TwinklingLiftWorks/git/public/espresso-v2301-native-image-test/target/test-classes:/home/linghengqian/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/home/linghengqian/.m2/repository/org/hamcrest/hamcrest/2.2/hamcrest-2.2.jar:/home/linghengqian/.m2/repository/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar:/home/linghengqian/.m2/repository/org/apache/groovy/groovy/4.0.10/groovy-4.0.10.jar:/home/linghengqian/.m2/repository/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar:/home/linghengqian/.m2/repository/org/graalvm/truffle/truffle-api/23.0.1/truffle-api-23.0.1.jar:/home/linghengqian/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/home/linghengqian/.m2/repository/org/junit/platform/junit-platform-engine/1.9.2/junit-platform-engine-1.9.2.jar:/home/linghengqian/.m2/repository/org/junit/platform/junit-platform-commons/1.9.2/junit-platform-commons-1.9.2.jar:/home/linghengqian/.m2/repository/com/google/errorprone/error_prone_annotations/2.3.4/error_prone_annotations-2.3.4.jar:/home/linghengqian/.m2/repository/org/junit/jupiter/junit-jupiter/5.9.2/junit-jupiter-5.9.2.jar:/home/linghengqian/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.2/junit-jupiter-engine-5.9.2.jar:/home/linghengqian/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.9.2/junit-jupiter-params-5.9.2.jar:/home/linghengqian/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/home/linghengqian/.m2/repository/com/google/guava/guava/30.0-jre/guava-30.0-jre.jar:/home/linghengqian/.m2/repository/org/checkerframework/checker-qual/3.5.0/checker-qual-3.5.0.jar:/home/linghengqian/.m2/repository/com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3.jar:/home/linghengqian/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.2/junit-jupiter-api-5.9.2.jar:/home/linghengqian/.m2/repository/org/graalvm/sdk/graal-sdk/23.0.1/graal-sdk-23.0.1.jar:/home/linghengqian/.m2/repository/org/graalvm/buildtools/native-maven-plugin/0.9.23/native-maven-plugin-0.9.23.jar:/home/linghengqian/.m2/repository/org/graalvm/buildtools/junit-platform-native/0.9.23/junit-platform-native-0.9.23.jar:/home/linghengqian/.m2/repository/org/junit/platform/junit-platform-console/1.8.1/junit-platform-console-1.8.1.jar:/home/linghengqian/.m2/repository/org/junit/platform/junit-platform-reporting/1.8.1/junit-platform-reporting-1.8.1.jar:/home/linghengqian/.m2/repository/org/junit/platform/junit-platform-launcher/1.8.1/junit-platform-launcher-1.8.1.jar:/home/linghengqian/.m2/repository/org/junit/platform/junit-platform-engine/1.8.1/junit-platform-engine-1.8.1.jar:/home/linghengqian/.m2/repository/org/junit/platform/junit-platform-commons/1.8.1/junit-platform-commons-1.8.1.jar:/home/linghengqian/.m2/repository/org/junit/jupiter/junit-jupiter/5.8.1/junit-jupiter-5.8.1.jar:/home/linghengqian/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.8.1/junit-jupiter-api-5.8.1.jar:/home/linghengqian/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.8.1/junit-jupiter-params-5.8.1.jar:/home/linghengqian/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.8.1/junit-jupiter-engine-5.8.1.jar:/home/linghengqian/.m2/repository/org/graalvm/buildtools/utils/0.9.23/utils-0.9.23.jar:/home/linghengqian/.m2/repository/org/graalvm/buildtools/graalvm-reachability-metadata/0.9.23/graalvm-reachability-metadata-0.9.23.jar:/home/linghengqian/.m2/repository/org/graalvm/buildtools/junit-platform-native/0.9.23/junit-platform-native-0.9.23.jar --no-fallback -H:Path=/home/linghengqian/TwinklingLiftWorks/git/public/espresso-v2301-native-image-test/target -H:Name=native-tests -Djunit.platform.listeners.uid.tracking.output.dir=/home/linghengqian/TwinklingLiftWorks/git/public/espresso-v2301-native-image-test/target/test-ids -H:Class=org.graalvm.junit.platform.NativeImageJUnitLauncher --features=org.graalvm.junit.platform.JUnitPlatformFeature -H:ConfigurationFileDirectories=/home/linghengqian/TwinklingLiftWorks/git/public/espresso-v2301-native-image-test/target/native/agent-output/test -H:+AllowIncompleteClasspath returned non-zero result -> [Help 1]
 [ERROR] 

@@ -13,26 +13,19 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public final class EspressoInlineExpressionParser {
-    
+
     private static final String JAVA_CLASSPATH;
-    
-    private static final Context ESPRESSO_CONTEXT;
-    
+
     private static final char SPLITTER = ',';
-    
-    private static final Map<String, Value> SCRIPTS = new ConcurrentHashMap<>();
-    
+
     static {
         URL resource = Thread.currentThread().getContextClassLoader().getResource("espresso-need-libs");
         String dir = null != resource ? resource.getPath() : null;
         JAVA_CLASSPATH = dir + File.separator + "groovy.jar";
-        ESPRESSO_CONTEXT = createContext();
     }
 
     public String handlePlaceHolder(final String inlineExpression) {
@@ -40,10 +33,12 @@ public final class EspressoInlineExpressionParser {
     }
 
     public List<String> splitAndEvaluate(final String inlineExpression) {
-        return Strings.isNullOrEmpty(inlineExpression) ? Collections.emptyList() : flatten(evaluate(split(inlineExpression)));
+        try (Context context = createContext()) {
+            return Strings.isNullOrEmpty(inlineExpression) ? Collections.emptyList() : flatten(evaluate(split(inlineExpression), context));
+        }
     }
-    
-    private static Context createContext() {
+
+    private Context createContext() {
         // TODO https://github.com/oracle/graal/issues/4555 not yet closed
         return Context.newBuilder()
                 .allowAllAccess(true)
@@ -51,7 +46,7 @@ public final class EspressoInlineExpressionParser {
                 .option("java.Classpath", JAVA_CLASSPATH)
                 .build();
     }
-    
+
     private List<String> split(final String inlineExpression) {
         List<String> result = new ArrayList<>();
         StringBuilder segment = new StringBuilder();
@@ -92,8 +87,8 @@ public final class EspressoInlineExpressionParser {
         }
         return result;
     }
-    
-    private List<Value> evaluate(final List<String> inlineExpressions) {
+
+    private List<Value> evaluate(final List<String> inlineExpressions, final Context context) {
         List<Value> result = new ArrayList<>(inlineExpressions.size());
         for (String each : inlineExpressions) {
             StringBuilder expression = new StringBuilder(handlePlaceHolder(each));
@@ -103,25 +98,19 @@ public final class EspressoInlineExpressionParser {
             if (!each.endsWith("\"")) {
                 expression.append('"');
             }
-            result.add(evaluate(expression.toString()));
+            result.add(evaluate(expression.toString(), context));
         }
         return result;
     }
-    
-    private Value evaluate(final String expression) {
-        Value script;
-        if (SCRIPTS.containsKey(expression)) {
-            script = SCRIPTS.get(expression);
-        } else {
-            script = ESPRESSO_CONTEXT.getBindings("java")
-                    .getMember(GroovyShell.class.getName())
-                    .newInstance()
-                    .invokeMember("parse", expression);
-            SCRIPTS.put(expression, script);
-        }
-        return script.invokeMember("run");
+
+    private Value evaluate(final String expression, final Context context) {
+        return context.getBindings("java")
+                .getMember(GroovyShell.class.getName())
+                .newInstance()
+                .invokeMember("parse", expression)
+                .invokeMember("run");
     }
-    
+
     private List<String> flatten(final List<Value> segments) {
         List<String> result = new ArrayList<>();
         for (Value each : segments) {
@@ -133,7 +122,7 @@ public final class EspressoInlineExpressionParser {
         }
         return result;
     }
-    
+
     private List<String> assemblyCartesianSegments(final Value segment) {
         Set<List<String>> cartesianValues = getCartesianValues(segment);
         List<String> result = new ArrayList<>(cartesianValues.size());
@@ -142,7 +131,7 @@ public final class EspressoInlineExpressionParser {
         }
         return result;
     }
-    
+
     @SuppressWarnings("unchecked")
     private Set<List<String>> getCartesianValues(final Value segment) {
         Object[] temp = segment.invokeMember("getValues").as(Object[].class);
@@ -159,7 +148,7 @@ public final class EspressoInlineExpressionParser {
         }
         return Sets.cartesianProduct(result);
     }
-    
+
     private String assemblySegment(final List<String> cartesianValue, final Value segment) {
         String[] temp = segment.invokeMember("getStrings").as(String[].class);
         StringBuilder result = new StringBuilder();
