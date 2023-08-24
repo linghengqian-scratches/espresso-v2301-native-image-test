@@ -1,6 +1,6 @@
 # espresso-v2301-native-image-test
 
-- For https://github.com/apache/shardingsphere/pull/27487 to test.
+- For https://github.com/apache/shardingsphere/pull/27487 and https://github.com/oracle/graal/issues/7072 to test.
 - Under Ubuntu 22.04 LTS, perform the following steps to complete the environment configuration and unit testing.
 
 ```shell
